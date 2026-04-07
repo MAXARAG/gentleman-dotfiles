@@ -9,7 +9,7 @@ cd "$env:USERPROFILE\.config\opencode"
 git pull
 ```
 
-Si hay conflictos, resolverlos manualmente. Normalmente no hay porque solo vos escribís en este repo.
+Si hay conflictos, resolverlos manualmente. Normally no hay porque solo vos escribís en este repo.
 
 ## Paso 2 — Importar memories GLOBALES de Engram
 
@@ -38,36 +38,57 @@ Mostrar las sesiones recientes y pedir:
 
 Por favor indicá:
 - Link del repositorio: [https://github.com/...]
-- Ruta local donde está el proyecto: [ej: D:\Proyectos\MiProyecto]
+- Ruta local donde está el proyecto o donde querés que se clone: [ej: D:\Proyectos\MiProyecto]
 ```
 
-Una vez que el usuario proporcione estos datos:
+## Paso 5 — Verificar ruta y confirmar antes de operar
 
-1. Si la ruta NO existe, clonar el repositorio:
-   ```powershell
-   git clone [link-del-repo] [ruta-local]
+Una vez que el usuario proporcione link + ruta:
+
+1. **Si la ruta EXISTE**: Mostrar qué hay ahí y pedir confirmación:
+   ```
+   📂 La ruta ya existe: [ruta]
+   Contenido actual:
+   - [lista de archivos/carpetas principales]
+   
+   ⚠️ ¿Querés hacer `git pull` para actualizar? (s/n)
    ```
 
-2. Si la ruta ya existe, hacer pull:
-   ```powershell
-   cd [ruta-local]
-   git pull
+2. **Si la ruta NO EXISTE**: Confirmar antes de clonar:
+   ```
+   🆕 La ruta no existe. Se va a clonar el repo.
+   
+   ⚠️ ¿Confirmás que querés clonar en: [ruta]? (s/n)
    ```
 
-3. Importar memories del proyecto (si tiene `.engram/`):
-   ```powershell
-   cd [ruta-local]
-   git pull
-   engram sync --import
-   ```
+## Paso 6 — Ejecutar según confirmación
 
-4. Mostrar contexto del proyecto:
-   ```powershell
-   cd [ruta-local]
-   engram context
-   ```
+**Si eligió pull (ruta existente):**
+```powershell
+cd [ruta-local]
+git pull
+```
 
-## Paso 5 — Mostrar contexto completo
+**Si eligió clone (ruta nueva):**
+```powershell
+git clone [link-del-repo] [ruta-local]
+```
+
+## Paso 7 — Importar memories del proyecto
+
+Si el proyecto tiene `.engram/`:
+```powershell
+cd [ruta-local]
+git pull
+engram sync --import
+```
+
+## Paso 8 — Mostrar contexto completo
+
+```powershell
+cd [ruta-local]
+engram context
+```
 
 ```
 ✅ Contexto recuperado.
