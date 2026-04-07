@@ -12,6 +12,7 @@ Si no lo hiciste todavía, guardá el resumen de la sesión:
 En el directorio del proyecto donde estabas trabajando:
 
 ```powershell
+cd [ruta-del-proyecto]
 engram sync
 git add .engram/
 git diff --cached --stat
@@ -25,7 +26,25 @@ git push
 
 Si no hay `.engram/` en el proyecto (proyecto sin sync configurado), saltá este paso.
 
-## Paso 3 — Sync de memories GLOBALES
+## Paso 3 — Push del proyecto al repositorio
+
+Hacer push de todos los cambios del proyecto al repositorio remoto:
+
+```powershell
+cd [ruta-del-proyecto]
+git add -A
+git status
+```
+
+Si hay cambios que querés pushear:
+```powershell
+git commit -m "[tipo]: [descripción]"
+git push
+```
+
+**IMPORTANTE**: Pedir al usuario confirmación antes de pushear,告知 qué archivos cambiaron.
+
+## Paso 4 — Sync de memories GLOBALES
 
 ```powershell
 cd "$env:USERPROFILE\engram-sync"
@@ -40,7 +59,7 @@ git commit -m "chore: sync engram $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
 git push
 ```
 
-## Paso 4 — Sync de dotfiles de OpenCode
+## Paso 5 — Sync de dotfiles de OpenCode
 
 ```powershell
 cd "$env:USERPROFILE\.config\opencode"
@@ -54,14 +73,14 @@ git commit -m "chore: sync opencode dotfiles"
 git push
 ```
 
-## Paso 5 — Confirmar
+## Paso 6 — Confirmar
 
-Mostrá al usuario:
+Mostrar al usuario:
 ```
 ✅ Sync completo. Todo pusheado.
-   - Engram del proyecto: [con/sin cambios]
+   - Proyecto [nombre]: [con/sin cambios]
    - Engram global: [con/sin cambios]
    - Dotfiles OpenCode: [con/sin cambios]
 
-Podés continuar desde la notebook con /sync-start.
+Podés continuar desde la otra PC con /sync-start.
 ```

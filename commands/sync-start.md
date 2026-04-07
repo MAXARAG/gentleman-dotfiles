@@ -26,28 +26,52 @@ Buscá en el contexto reciente para saber qué proyecto tenés que continuar:
 engram context
 ```
 
-Esto te va a mostrar la última sesión guardada. Abrí el proyecto correspondiente.
+Esto te va a mostrar la última sesión guardada.
 
-## Paso 4 — Importar memories del proyecto
+## Paso 4 — Preguntar al usuario qué proyecto quiere continuar
 
-Una vez dentro del directorio del proyecto, si tiene `.engram/`:
-```powershell
-git pull
-engram sync --import
+Mostrar las sesiones recientes y pedir:
+
+```
+🎯 ¿Con qué proyecto querés continuar?
+   Última sesión: [nombre del proyecto]
+
+Por favor indicá:
+- Link del repositorio: [https://github.com/...]
+- Ruta local donde está el proyecto: [ej: D:\Proyectos\MiProyecto]
 ```
 
-El plugin de OpenCode también hace esto automáticamente al detectar `.engram/manifest.json`.
+Una vez que el usuario proporcione estos datos:
+
+1. Si la ruta NO existe, clonar el repositorio:
+   ```powershell
+   git clone [link-del-repo] [ruta-local]
+   ```
+
+2. Si la ruta ya existe, hacer pull:
+   ```powershell
+   cd [ruta-local]
+   git pull
+   ```
+
+3. Importar memories del proyecto (si tiene `.engram/`):
+   ```powershell
+   cd [ruta-local]
+   git pull
+   engram sync --import
+   ```
+
+4. Mostrar contexto del proyecto:
+   ```powershell
+   cd [ruta-local]
+   engram context
+   ```
 
 ## Paso 5 — Mostrar contexto completo
 
-```powershell
-engram context
-```
-
-Mostrá al usuario el resumen de la última sesión para que sepa exactamente dónde estaba y qué falta.
-
 ```
 ✅ Contexto recuperado.
+   Proyecto: [nombre]
    Última sesión: [resumen de mem_context]
    
 Podés continuar desde donde dejaste.
