@@ -17,37 +17,63 @@ Si no existe, preguntar al usuario la ruta del proyecto.
 
 ## Paso 3 — Verificar estado actual con fetch
 
-Entrar al directorio del proyecto y hacer fetch para ver qué hay nuevo en el remoto:
+Entrar al directorio del proyecto y hacer fetch para ver el estado real vs remoto:
+
 ```powershell
 cd [ruta-del-proyecto]
 git fetch --all
+git status
+git diff --stat HEAD origin/main
 ```
 
-Mostrar comparación:
+Mostrar comparación detallada:
 ```
 📂 Proyecto: [nombre]
 📁 Ruta: [ruta]
 🔗 Repo: [link]
 
 🔍 Estado vs remoto (origin/main):
-   - Commits adelante del remoto: [X]
-   - Commits detrás del remoto: [Y]
-   - Archivos modificados localmente: [lista]
+   - Commits locales sin pushear: [X commits]
+   - Archivos modificados sin commitear: [lista]
    - Archivos nuevos sin trackear: [lista]
+   - Archivos eliminados sin commitear: [lista]
 ```
 
-## Paso 4 — Mostrar qué se va a pushear y pedir confirmación
-
-Si hay cambios locales para pushear:
+**Si no hay nada para pushear**: Avisar y saltar al Paso 6.
 ```
-📦 Cambios pendientes de pushear:
-   [lista de archivos cambiados]
-   [commits pendientes]
-
-⚠️ ¿Querés hacer commit y push de estos cambios? (s/n)
+ℹ️ No hay cambios locales para pushear. El proyecto está en sync con el remoto.
 ```
 
-**Si el usuario NO confirma**: Mostrar qué se perdería si no hace push y尊重ar su decisión. No forzar.
+## Paso 4 — Mostrar exactamente qué se va a pushear
+
+Antes de pedir confirmación, mostrar con detalle:
+
+```powershell
+git diff --stat HEAD
+git log origin/main..HEAD --oneline
+```
+
+Mostrar:
+```
+📦 Esto es lo que se va a pushear:
+
+   Commits nuevos:
+   - [hash] [mensaje del commit]
+
+   Archivos modificados sin commitear:
+   - [archivo] (+X líneas / -Y líneas)
+
+   Archivos nuevos:
+   - [archivo]
+
+⚠️ ¿Confirmás que estos cambios son correctos y querés hacer commit y push? (s/n)
+```
+
+**Si el usuario NO confirma**: Respetarlo. Mostrar advertencia:
+```
+⚠️ No se hizo push. Los cambios quedan SOLO en esta PC.
+   Si cambiás de PC sin pushear, los perderás.
+```
 
 **Si el usuario CONFIRMA**: Ir al Paso 5.
 
@@ -56,15 +82,14 @@ Si hay cambios locales para pushear:
 ```powershell
 cd [ruta-del-proyecto]
 git add -A
-git status
 ```
 
-Mostrar qué se va a commitear:
+Mostrar qué se va a commitear y pedir mensaje:
 ```
 📝 Archivos a commitear:
    [lista]
 
-✏️ Ingresá el mensaje del commit (o enter para default):
+✏️ Ingresá el mensaje del commit (o enter para usar "chore: sync changes"):
 ```
 
 Leer input del usuario para el mensaje, luego:
@@ -73,12 +98,22 @@ git commit -m "[mensaje-ingresado]"
 git push
 ```
 
-Mostrar resultado:
+**Verificar que el push fue exitoso:**
+```powershell
+git fetch --all
+git log HEAD..origin/main --oneline
+git log origin/main..HEAD --oneline
 ```
-✅ Push exitoso.
-   Commit: [hash] - [mensaje]
-   Repo: [link]
+
+Si ambos outputs están vacíos, el push fue correcto. Mostrar:
 ```
+✅ Push verificado correctamente.
+   - Local y remoto están en sync.
+   - Commit: [hash] - [mensaje]
+   - Repo: [link]
+```
+
+Si hay diferencias → avisar al usuario que algo falló y NO continuar.
 
 ## Paso 6 — Sync de memories del proyecto (después del push)
 
@@ -140,7 +175,7 @@ Mostrar al usuario:
 ```
 ✅ Sync completo.
 
-   - Proyecto [nombre]: ✅ Pusheado
+   - Proyecto [nombre]: ✅ Pusheado y verificado
    - Repo: [link]
    - Engram global: [con/sin cambios]
    - Dotfiles OpenCode: [con/sin cambios]
