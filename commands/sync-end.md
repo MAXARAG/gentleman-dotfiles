@@ -1,29 +1,78 @@
-# /sync-end — Sync al terminar de trabajar
+# /sync-end — Sincronizar al terminar
 
-Ejecutá estos pasos EN ORDEN para dejar todo sincronizado antes de cambiar de PC.
+Sube las configuraciones y memorias a GitHub. NO toca el proyecto (eso lo hacés con `/agree` opción 1).
 
-## Paso 1 — Guardar sesión en Engram
+---
 
-Si no lo hiciste todavía, guardá el resumen de la sesión:
-- Llamá a `mem_session_summary` con todo lo que trabajaste hoy
+## Paso 1: Guardar sesión en Engram
 
-## Paso 2 — Leer configuración del proyecto (del último sync-start)
+Si no guardaste el resumen de la sesión todavía:
 
-Leer el archivo `~/.config/opencode/sync-project.json` para obtener:
-- Repo URL
-- Ruta local
+```bash
+mem_session_summary
+```
 
-Si no existe, preguntar al usuario la ruta del proyecto.
+Esto guarda lo que trabajaste en esta sesión.
 
-## Paso 3 — Verificar estado actual con fetch
+---
 
-Entrar al directorio del proyecto y hacer fetch para ver el estado real vs remoto:
+## Paso 2: Sync de memories GLOBALES de Engram
 
-```powershell
-cd [ruta-del-proyecto]
-git fetch --all
+```bash
+cd ~/engram-sync
+engram sync --all
+git add .engram/
+git diff --cached --stat
+```
+
+Si hay cambios, commitear y pushear:
+
+```bash
+git commit -m "chore: sync engram memories $(date -u +'%Y-%m-%d')"
+git push
+```
+
+---
+
+## Paso 3: Sync de dotfiles de OpenCode
+
+```bash
+cd ~/.config/opencode
 git status
-git diff --stat HEAD origin/main
+```
+
+Si hay cambios, commitear y pushear:
+
+```bash
+git add -A
+git commit -m "chore: sync dotfiles $(date -u +'%Y-%m-%d')"
+git push
+```
+
+---
+
+## Paso 4: Guardar timestamp del último sync
+
+```bash
+date -u +"%Y-%m-%dT%H:%M:%SZ" > ~/.config/opencode/last-sync.json
+git add last-sync.json
+git commit -m "chore: update sync timestamp"
+git push
+```
+
+---
+
+## Reporte final
+
+```
+✅ Sync completado!
+
+   🧠 Engram: memorias subidas
+   📁 Dotfiles: subidos
+   🕐Último sync: [timestamp]
+
+💡 El proyecto ya se sincronizó con /agree (si elegiste opción 1).
+   Cuando vayas a otra PC, ejecutá /sync-start + /agrow.
 ```
 
 Mostrar comparación detallada:
