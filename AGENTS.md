@@ -47,6 +47,7 @@ When you detect any of these contexts, IMMEDIATELY load the corresponding skill 
 | ------- | ------------- |
 | Go tests, Bubbletea TUI testing | go-testing |
 | Creating new AI skills | skill-creator |
+| User runs /agree, asks to commit/push/PR/merge | agree |
 
 Load skills BEFORE writing code. Apply ALL patterns. Multiple skills can apply simultaneously.
 
