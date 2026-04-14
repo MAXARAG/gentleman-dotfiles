@@ -4,7 +4,7 @@
     "gentleman": {
       "description": "Senior Architect mentor - helpful first, challenging when it matters",
       "mode": "primary",
-      "model": "anthropic/claude-sonnet-4-6",
+      "model": "opencode/minimax-m2.5-free",
       "prompt": "{file:./AGENTS.md}",
       "tools": {
         "edit": true,
@@ -16,7 +16,7 @@
       "hidden": true,
       "mode": "subagent",
       "model": "github-copilot/claude-sonnet-4.6",
-      "prompt": "{file:./prompts/sdd/sdd-apply.md}",
+      "prompt": "You are an SDD executor for the apply phase, not the orchestrator. Do this phase's work yourself. Do NOT delegate, Do NOT call task/delegate, and Do NOT launch sub-agents. Read your skill file at ~/.config/opencode/skills/sdd-apply/SKILL.md and follow it exactly.",
       "tools": {
         "bash": true,
         "edit": true,
@@ -29,7 +29,7 @@
       "hidden": true,
       "mode": "subagent",
       "model": "github-copilot/claude-haiku-4.5",
-      "prompt": "{file:./prompts/sdd/sdd-archive.md}",
+      "prompt": "You are an SDD executor for the archive phase, not the orchestrator. Do this phase's work yourself. Do NOT delegate, Do NOT call task/delegate, and Do NOT launch sub-agents. Read your skill file at ~/.config/opencode/skills/sdd-archive/SKILL.md and follow it exactly.",
       "tools": {
         "bash": true,
         "edit": true,
@@ -41,8 +41,8 @@
       "description": "Create technical design from proposals",
       "hidden": true,
       "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-6",
-      "prompt": "{file:./prompts/sdd/sdd-design.md}",
+      "model": "github-copilot/claude-sonnet-4.6",
+      "prompt": "You are an SDD executor for the design phase, not the orchestrator. Do this phase's work yourself. Do NOT delegate, Do NOT call task/delegate, and Do NOT launch sub-agents. Read your skill file at ~/.config/opencode/skills/sdd-design/SKILL.md and follow it exactly.",
       "tools": {
         "bash": true,
         "edit": true,
@@ -54,8 +54,8 @@
       "description": "Investigate codebase and think through ideas",
       "hidden": true,
       "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-6",
-      "prompt": "{file:./prompts/sdd/sdd-explore.md}",
+      "model": "github-copilot/claude-sonnet-4.6",
+      "prompt": "You are an SDD executor for the explore phase, not the orchestrator. Do this phase's work yourself. Do NOT delegate, Do NOT call task/delegate, and Do NOT launch sub-agents. Read your skill file at ~/.config/opencode/skills/sdd-explore/SKILL.md and follow it exactly.",
       "tools": {
         "bash": true,
         "edit": true,
@@ -67,8 +67,8 @@
       "description": "Bootstrap SDD context and project configuration",
       "hidden": true,
       "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-6",
-      "prompt": "{file:./prompts/sdd/sdd-init.md}",
+      "model": "github-copilot/claude-sonnet-4.6",
+      "prompt": "You are an SDD executor for the init phase, not the orchestrator. Do this phase's work yourself. Do NOT delegate, Do NOT call task/delegate, and Do NOT launch sub-agents. Read your skill file at ~/.config/opencode/skills/sdd-init/SKILL.md and follow it exactly.",
       "tools": {
         "bash": true,
         "edit": true,
@@ -80,7 +80,7 @@
       "description": "Guide user through a complete SDD cycle using their real codebase",
       "hidden": true,
       "mode": "subagent",
-      "prompt": "{file:./prompts/sdd/sdd-onboard.md}",
+      "prompt": "You are an SDD executor for the onboard phase, not the orchestrator. Do this phase's work yourself. Do NOT delegate, Do NOT call task/delegate, and Do NOT launch sub-agents. Read your skill file at ~/.config/opencode/skills/sdd-onboard/SKILL.md and follow it exactly.",
       "tools": {
         "bash": true,
         "edit": true,
@@ -91,7 +91,7 @@
     "sdd-orchestrator": {
       "description": "Agent Teams Orchestrator - coordinates sub-agents, never does work inline",
       "mode": "primary",
-      "model": "anthropic/claude-sonnet-4-6",
+      "model": "opencode/minimax-m2.5-free",
       "permission": {
         "task": {
           "*": "deny",
@@ -114,7 +114,7 @@
       "hidden": true,
       "mode": "subagent",
       "model": "github-copilot/gemini-3.1-pro-preview",
-      "prompt": "{file:./prompts/sdd/sdd-propose.md}",
+      "prompt": "You are an SDD executor for the propose phase, not the orchestrator. Do this phase's work yourself. Do NOT delegate, Do NOT call task/delegate, and Do NOT launch sub-agents. Read your skill file at ~/.config/opencode/skills/sdd-propose/SKILL.md and follow it exactly.",
       "tools": {
         "bash": true,
         "edit": true,
@@ -127,7 +127,7 @@
       "hidden": true,
       "mode": "subagent",
       "model": "github-copilot/gemini-3.1-pro-preview",
-      "prompt": "{file:./prompts/sdd/sdd-spec.md}",
+      "prompt": "You are an SDD executor for the spec phase, not the orchestrator. Do this phase's work yourself. Do NOT delegate, Do NOT call task/delegate, and Do NOT launch sub-agents. Read your skill file at ~/.config/opencode/skills/sdd-spec/SKILL.md and follow it exactly.",
       "tools": {
         "bash": true,
         "edit": true,
@@ -139,8 +139,8 @@
       "description": "Break down specs and designs into implementation tasks",
       "hidden": true,
       "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-6",
-      "prompt": "{file:./prompts/sdd/sdd-tasks.md}",
+      "model": "github-copilot/claude-sonnet-4.6",
+      "prompt": "You are an SDD executor for the tasks phase, not the orchestrator. Do this phase's work yourself. Do NOT delegate, Do NOT call task/delegate, and Do NOT launch sub-agents. Read your skill file at ~/.config/opencode/skills/sdd-tasks/SKILL.md and follow it exactly.",
       "tools": {
         "bash": true,
         "edit": true,
@@ -153,7 +153,7 @@
       "hidden": true,
       "mode": "subagent",
       "model": "github-copilot/gpt-5.4",
-      "prompt": "{file:./prompts/sdd/sdd-verify.md}",
+      "prompt": "You are an SDD executor for the verify phase, not the orchestrator. Do this phase's work yourself. Do NOT delegate, Do NOT call task/delegate, and Do NOT launch sub-agents. Read your skill file at ~/.config/opencode/skills/sdd-verify/SKILL.md and follow it exactly.",
       "tools": {
         "bash": true,
         "edit": true,
@@ -170,7 +170,7 @@
     },
     "engram": {
       "command": [
-        "engram",
+        "C:\\Users\\PC\\bin\\engram.exe",
         "mcp",
         "--tools=agent"
       ],
